@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PixabayApplication</string>
+    <string name="app_name">ComposeExample</string>
     <string name="title_home">List view</string>
     <string name="title_notifications">Detail view</string>
     <string name="enter_your_search">Enter your search</string>
