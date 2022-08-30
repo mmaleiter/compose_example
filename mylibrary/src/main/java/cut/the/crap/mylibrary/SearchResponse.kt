@@ -1,4 +1,4 @@
-package com.pixabay.apiservice
+package cut.the.crap.mylibrary
 
 data class SearchResponse (
     val total: Long,

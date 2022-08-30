@@ -1,7 +1,7 @@
 package com.pixabay.ui.home
 
-import com.pixabay.apiservice.PixaBayItem
-import com.pixabay.ui.base.ListAdapterItem
+import cut.the.crap.mylibrary.PixaBayItem
+import cut.the.crap.mylibrary.ListAdapterItem
 import java.io.Serializable
 
 data class PixBayUiListItem(

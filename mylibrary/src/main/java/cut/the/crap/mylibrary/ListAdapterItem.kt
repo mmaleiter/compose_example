@@ -1,4 +1,4 @@
-package com.pixabay.ui.base
+package cut.the.crap.mylibrary
 
 interface ListAdapterItem {
     val id : Long

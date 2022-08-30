@@ -1,7 +1,6 @@
-package com.pixabay.apiservice
+package cut.the.crap.mylibrary
 
 import com.google.gson.annotations.SerializedName
-import com.pixabay.ui.base.ListAdapterItem
 import java.io.Serializable
 
 data class PixaBayItem (

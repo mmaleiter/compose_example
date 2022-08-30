@@ -1,6 +1,5 @@
-package com.pixabay.apiservice
+package cut.the.crap.mylibrary
 
-import com.pixabay.BuildConfig
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request

@@ -16,11 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        //todo create an account on pixabay.com and provide your apiKey
-            //  file content of pixabayData example: key="11111111-c4e59e5580785f8e8d80t9b83"
-        Properties p = new Properties()
-        p.load( new FileInputStream(file("../../pixabayData")))
-        buildConfigField "String", "apiKey", p["key"]
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,8 +37,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
+
     buildFeatures {
         compose true
     }
@@ -69,16 +65,12 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.5.1"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation project(path: ':mylibrary')
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 //    implementation "androidx.compose.compiler:compiler:$compose_version"
 
 
-    // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
-    implementation 'com.google.code.gson:gson:2.8.9'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.3"
+
 
     // coil
     implementation "io.coil-kt:coil-compose:2.0.0-rc01"
