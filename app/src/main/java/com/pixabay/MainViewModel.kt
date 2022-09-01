@@ -1,6 +1,8 @@
 package com.pixabay
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pixabay.repository.PixBayItemsRepository
@@ -14,6 +16,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val pixBayItemsRepository: PixBayItemsRepository
 ) : ViewModel() {
+
+    val isRefreshing = false
 
     val imageList: State<Resource<List<PixBayUiListItem>>> =
         pixBayItemsRepository.currentSearchResultList

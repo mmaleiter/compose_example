@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.pixabay.compose"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -65,11 +65,10 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.5.1"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.26.2-beta"
     implementation project(path: ':api_requests')
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 //    implementation "androidx.compose.compiler:compiler:$compose_version"
-
-
 
 
     // coil

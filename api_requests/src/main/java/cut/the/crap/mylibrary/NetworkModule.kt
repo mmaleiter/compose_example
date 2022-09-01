@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -22,7 +23,11 @@ class NetworkModule {
         }
 
     @Provides
-    fun providesApikeyInterceptor() = ApiKeyInterceptor()
+    @ApiKeyString
+    fun provideApiKey(): String = BuildConfig.apiKey
+
+    @Provides
+    fun providesApikeyInterceptor(@ApiKeyString apiKey: String) = ApiKeyInterceptor(apiKey)
 
     @Provides
     fun providesOkHttpClient(
@@ -42,10 +47,13 @@ class NetworkModule {
         .client(okHttpClient)
         .build()
 
-
     @Provides
     fun provideApiService(retrofit: Retrofit): PixaBayService {
         return retrofit.create(PixaBayService::class.java)
     }
 
 }
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class ApiKeyString

@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import cut.the.crap.mylibrary.PixaBayService
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.home.PixBayUiListItem
-import cut.the.crap.mylibrary.WrappedService
 
 class PixBayItemsRepositoryImpl(
     private val pixaBayService: PixaBayService,
