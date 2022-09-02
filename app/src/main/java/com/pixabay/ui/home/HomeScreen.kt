@@ -45,6 +45,7 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        SearchWidget()
         when (state) {
             is Resource.Loading -> {
                 Box(
@@ -55,6 +56,7 @@ fun HomeScreen(
                 }
             }
             is Resource.Success -> {
+
                 val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = refreshing)
                 SwipeRefresh(
                     state = swipeRefreshState,
@@ -67,7 +69,7 @@ fun HomeScreen(
                             .fillMaxWidth(),
                     ) {
                         item {
-                            Spacer(modifier = Modifier.height(32.dp))
+                            Spacer(modifier = Modifier.height(8.dp))
                         }
                         items(state.data.orEmpty()) { pixabayItem ->
                             PixabayListItem(pixabayItem, viewModel, onNavigate)
@@ -84,6 +86,6 @@ fun HomeScreen(
                     ).show()
             }
         }
-        SearchWidget()
+
     }
 }
