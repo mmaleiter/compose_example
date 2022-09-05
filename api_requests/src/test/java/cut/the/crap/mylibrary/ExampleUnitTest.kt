@@ -15,7 +15,7 @@ class ExampleUnitTest {
         retrofit = networkModule.provideRetrofit(
             okHttpClient = networkModule.providesOkHttpClient(
                 httpLoggingInterceptor = networkModule.providesHttpLoggingInterceptor(),
-                apiKeyInterceptor = networkModule.providesApikeyInterceptor()
+                apiKeyInterceptor = networkModule.providesApikeyInterceptor(BuildConfig.apiKey)
             )
         )
     )

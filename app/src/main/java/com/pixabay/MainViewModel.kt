@@ -2,6 +2,7 @@ package com.pixabay
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,6 +32,22 @@ class MainViewModel @Inject constructor(
             pixBayItemsRepository.searchImages()
         }
     }
+
+    private var lastScrollIndex = 0
+
+    private val _scrollUp = MutableLiveData(false)
+    val scrollUp: LiveData<Boolean>
+        get() = _scrollUp
+
+    fun updateScrollPosition(newScrollIndex: Int) {
+        if (newScrollIndex == lastScrollIndex) return
+
+        _scrollUp.value = newScrollIndex > lastScrollIndex
+        lastScrollIndex = newScrollIndex
+    }
+
+
+
 
     fun showDetailScreen(pixaItem : PixBayUiListItem) {
         detailItem = pixaItem

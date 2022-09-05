@@ -36,6 +36,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
+//        freeCompilerArgs = ['-Xjvm-default=enable']
         jvmTarget = '1.8'
     }
 }
@@ -64,9 +65,6 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTest"
     def mockWebserverVersion = "4.7.2"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebserverVersion"
-
-
-
 
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
