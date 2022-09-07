@@ -51,8 +51,8 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+//    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
     //compose
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -67,6 +67,7 @@ dependencies {
 
     implementation("androidx.compose.material3:material3:1.0.0-beta01")
 
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.26.2-beta"
     implementation project(path: ':api_requests')
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"

@@ -3,14 +3,15 @@ package com.pixabay
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pixabay.ui.base.ComposeAppTheme
+import com.pixabay.ui.theme.ComposeAppTheme
+import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
+import com.pixabay.ui.detail.DetailScreenLandscape
 import com.pixabay.ui.home.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,21 +27,23 @@ class MainActivity : ComponentActivity() {
                 val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
                     "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
                 }
+                val model =
+                    viewModel<MainViewModel>(viewModelStoreOwner = viewModelStoreOwner)
 
                 NavHost(
                     navController = navController,
                     startDestination = "home_screen"
                 ) {
                     composable(route = "home_screen") {
-                        val model =
-                            hiltViewModel<MainViewModel>(viewModelStoreOwner = viewModelStoreOwner)
                         HomeScreen(onNavigate = navController::navigate, viewModel = model)
                     }
                     composable(route = "detail_screen") {
-                        val model =
-                            viewModel<MainViewModel>(viewModelStoreOwner = viewModelStoreOwner)
-                        DetailScreen(viewModel = model)
+                        ScreenOrientationHandler(landscapeContent = {DetailScreenLandscape(viewModel = model, onNavigate = navController::navigate)},
+                        portraitContent = {DetailScreen(viewModel = model, onNavigate = navController::navigate)})
+
                     }
+
+
                 }
             }
         }

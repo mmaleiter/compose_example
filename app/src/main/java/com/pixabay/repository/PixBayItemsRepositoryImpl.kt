@@ -30,7 +30,7 @@ class PixBayItemsRepositoryImpl(
     override fun toggleFavourite(imageItem: PixBayUiListItem) {
         val itemIndex = currentSearchResultList.value.data?.indexOf(imageItem) ?: -1
         val newList = currentSearchResultList.value.data?.toMutableList()
-            ?: emptyList<PixBayUiListItem>().toMutableList()
+            ?: mutableListOf()
         val isFavourite = if (isFavouriteList.contains(imageItem.id)) {
             isFavouriteList.remove(imageItem.id)
             false

@@ -30,6 +30,6 @@ data class PixaBayItem (
 
     val user: String,
     val userImageURL: String,
-) : ListAdapterItem, Serializable
+) : ListAdapterItem
 
 

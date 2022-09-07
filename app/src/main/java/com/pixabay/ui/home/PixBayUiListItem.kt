@@ -8,4 +8,4 @@ data class PixBayUiListItem(
     val pixBayItem: PixaBayItem,
     override val id: Long = pixBayItem.id,
     val isFavourite: Boolean = false
-) : ListAdapterItem, Serializable
+) : ListAdapterItem

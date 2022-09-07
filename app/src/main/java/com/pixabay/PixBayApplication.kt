@@ -7,10 +7,15 @@ import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.util.DebugLogger
+import com.pixabay.ui.base.ResponseHeaderInterceptor
 import dagger.hilt.android.HiltAndroidApp
+import okhttp3.Dispatcher
+import okhttp3.OkHttpClient
 
 @HiltAndroidApp
 class PixBayApplication : Application(), ImageLoaderFactory{
+
+
     @OptIn(ExperimentalCoilApi::class)
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)
@@ -38,20 +43,16 @@ class PixBayApplication : Application(), ImageLoaderFactory{
                     .maxSizeBytes(512L * 1024 * 1024) // 512MB
                     .build()
             }
-//            .okHttpClient {
-                // Don't limit concurrent network requests by host.
-//                val dispatcher = Dispatcher().apply { maxRequestsPerHost = maxRequests }
-
-//                // Lazily create the OkHttpClient that is used for network operations.
-//                OkHttpClient.Builder()
-//                    .dispatcher(dispatcher)
-//                    .build()
-//            }
-            // Show a short crossfade when loading images asynchronously.
+            .okHttpClient {
+                val dispatcher = Dispatcher().apply { maxRequestsPerHost = maxRequests }
+                OkHttpClient.Builder()
+                    .dispatcher(dispatcher)
+                    .addNetworkInterceptor(ResponseHeaderInterceptor())
+                    .build()
+            }
             .crossfade(true)
             // Ignore the network cache headers and always read from/write to the disk cache.
             .respectCacheHeaders(false)
-            // Enable logging to the standard Android log if this is a debug build.
             .apply { if (BuildConfig.DEBUG) logger(DebugLogger()) }
             .build()
     }

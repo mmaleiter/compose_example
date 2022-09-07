@@ -9,26 +9,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import com.pixabay.MainViewModel
 import com.pixabay.R
-import com.pixabay.ui.base.lightGreyAlpha
-import com.pixabay.ui.base.primaryCharcoal
+import com.pixabay.ui.theme.lightGreyAlpha
+import com.pixabay.ui.theme.primaryCharcoal
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PixabayListItem(
     pixabayItem: PixBayUiListItem,
-    viewModel: MainViewModel,
+    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     onNavigate: (String) -> Unit
 ) {
     Box(
@@ -36,6 +35,7 @@ fun PixabayListItem(
     ) {
         val isFavourite = pixabayItem.isFavourite
         val context = LocalContext.current
+        val uriHandler = LocalUriHandler.current
         Column(
             modifier = Modifier
                 .clickable {
@@ -55,22 +55,6 @@ fun PixabayListItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.width(16.dp))
-//                AsyncImage(
-//                    imageLoader = provideImageLoader(context),
-//                    model = ImageRequest.Builder(LocalContext.current)
-//                        .data(pixabayItem.pixBayItem.largeImageURL)
-//                        .crossfade(true)
-//                        .build(),
-//                    placeholder = painterResource(android.R.drawable.ic_dialog_info),
-//                    contentDescription = stringResource(android.R.string.cancel),
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .size(96.dp)
-//                        .width(144.dp)
-//                        .height(144.dp)
-//                        .clip(CircleShape)
-//                        .border(1.5.dp, MaterialTheme.colors.background, CircleShape)
-//                )
 
                 val painter = rememberAsyncImagePainter(
                     model = pixabayItem.pixBayItem.largeImageURL,
@@ -96,29 +80,53 @@ fun PixabayListItem(
                     }
                 }
 
-                Column(modifier = Modifier.fillMaxWidth(0.75f)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f)
+                        .padding(start = 16.dp)
+                ) {
+
+                    Text(
+                        text = pixabayItem.pixBayItem.user,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.onBackground,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
                     Text(
                         text = pixabayItem.pixBayItem.tags,
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colors.onBackground
                     )
-                    Text(
-                        text = pixabayItem.pixBayItem.type,
-                        modifier = Modifier.padding(start = 16.dp),
-                        color = Color.Red
-                    )
-                    Text(
-                        text = pixabayItem.pixBayItem.user,
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
-                    )
+
+                    Surface(
+                        onClick = { uriHandler.openUri(pixabayItem.pixBayItem.pageURL) },
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colors.primary,
+                                shape = CircleShape
+                            )
+                            .padding(start = 16.dp, end = 16.dp)
+                    ) {
+                        Text(
+                            text = "Visit web site",
+                            color = MaterialTheme.colors.primary,
+                        )
+
+                    }
                 }
                 IconButton(onClick = { viewModel.toggleFavourite(pixabayItem) }) {
                     Icon(
                         painter =
                         if (isFavourite) painterResource(id = R.drawable.ic_favorite_filled)
                         else painterResource(id = R.drawable.ic_favorite_border),
+                        tint = MaterialTheme.colors.primary,
                         contentDescription = "Search"
                     )
                 }

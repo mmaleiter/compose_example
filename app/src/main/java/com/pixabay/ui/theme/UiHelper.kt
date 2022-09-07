@@ -1,4 +1,4 @@
-package com.pixabay.ui.base
+package com.pixabay.ui.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable

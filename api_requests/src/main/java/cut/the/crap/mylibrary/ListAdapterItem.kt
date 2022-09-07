@@ -1,5 +1,8 @@
 package cut.the.crap.mylibrary
 
-interface ListAdapterItem {
+import java.io.Serializable
+
+
+interface ListAdapterItem : Serializable {
     val id : Long
 }
