@@ -68,7 +68,6 @@ fun HomeScreen(
         }
     }
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -127,7 +126,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                     val itemStrings =
-                        listOf("Hello", "you", "crazy", "fuck", "gesagt", "guten", "tag")
+                        listOf("Hello", "you", "crazy", "god", "gesagt", "guten", "tag")
                     val itemData = itemStrings.map { FilterChipData(it) }
 
                     viewModel.imageList
@@ -159,10 +158,7 @@ fun HomeScreen(
                 }
                 SearchWidget()
             }
-
         }
-
-
     }
 }
 
