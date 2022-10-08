@@ -125,11 +125,10 @@ fun HomeScreen(
                     modifier = Modifier.padding(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                    val itemStrings =
-                        listOf("Hello", "you", "crazy", "god", "gesagt", "guten", "tag")
+                    val itemStrings = viewModel.filterList.value
+
                     val itemData = itemStrings.map { FilterChipData(it) }
 
-                    viewModel.imageList
                     itemData.forEach {
                         item {
                             Surface(

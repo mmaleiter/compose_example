@@ -18,6 +18,9 @@ class MainViewModel @Inject constructor(
     val imageList: State<Resource<List<PixBayUiListItem>>> =
         pixBayItemsRepository.currentSearchResultList
 
+    val filterList: State<List<String>> =
+        pixBayItemsRepository.currentFilterList
+
     var searchTerm = ""
 
     lateinit var detailItem: PixBayUiListItem

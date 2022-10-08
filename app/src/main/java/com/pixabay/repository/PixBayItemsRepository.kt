@@ -8,6 +8,8 @@ interface PixBayItemsRepository {
 
     val currentSearchResultList: State<Resource<List<PixBayUiListItem>>>
 
+    val currentFilterList: State<List<String>>
+
     val isFavouriteList: MutableList<Long>
 
     suspend fun searchImages(searchTerm: String = "fruits")

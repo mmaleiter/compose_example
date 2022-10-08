@@ -126,11 +126,12 @@ fun HomeScreenLandscape(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         val itemStrings =
-                            listOf("Hello", "you", "crazy", "fuck", "gesagt", "guten", "tag")
-                        val itemData = itemStrings.map { FilterChipData(it) }
+                            viewModel.imageList.value.data?.
+                            map { it.pixBayItem.getTagList()  }?.flatten()?.toSet()?.toList()
 
-                        viewModel.imageList
-                        itemData.forEach {
+                        val itemData = itemStrings?.map { FilterChipData(it) }
+
+                        itemData?.forEach {
                             item {
                                 Surface(
                                     color = if (it.isSelected) MaterialTheme.colors.surface

@@ -9,3 +9,9 @@ data class PixBayUiListItem(
     override val id: Long = pixBayItem.id,
     val isFavourite: Boolean = false
 ) : ListAdapterItem
+
+fun PixaBayItem.getTagList() : List<String> {
+    return this.tags.split(",").map{
+        it.trim()
+    }.toSet().toList()
+}
