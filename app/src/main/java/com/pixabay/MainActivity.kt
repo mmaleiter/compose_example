@@ -13,6 +13,7 @@ import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
 import com.pixabay.ui.detail.DetailScreenLandscape
 import com.pixabay.ui.home.HomeScreen
+import com.pixabay.ui.pager.PagerScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +22,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             ComposeAppTheme {
                 val navController = rememberNavController()
                 val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
@@ -38,12 +38,23 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(onNavigate = navController::navigate, viewModel = model)
                     }
                     composable(route = "detail_screen") {
-                        ScreenOrientationHandler(landscapeContent = {DetailScreenLandscape(viewModel = model, onNavigate = navController::navigate)},
-                        portraitContent = {DetailScreen(viewModel = model, onNavigate = navController::navigate)})
+                        ScreenOrientationHandler(landscapeContent = {
+                            DetailScreenLandscape(
+                                viewModel = model,
+                                onNavigate = navController::navigate
+                            )
+                        },
+                            portraitContent = {
+                                DetailScreen(
+                                    viewModel = model,
+                                    onNavigate = navController::navigate
+                                )
+                            })
 
                     }
-
-
+                    composable(route = "view_pager_screen") {
+                        PagerScreen(viewModel = model)
+                    }
                 }
             }
         }

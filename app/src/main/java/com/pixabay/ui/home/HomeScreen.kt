@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +30,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pixabay.MainViewModel
 import com.pixabay.ui.base.Resource
+import com.pixabay.ui.base.ScrollableAppBar
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
@@ -68,13 +71,23 @@ fun HomeScreen(
         }
     }
 
-    Box(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-    ) {
-
-        Column {
+            .nestedScroll(nestedScrollConnection),
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    onNavigate("view_pager_screen")
+                },
+                backgroundColor = Color.Blue,
+                contentColor = Color.White
+            ){
+                Icon(Icons.Filled.Add,"")
+            }
+        }
+    ) { paddingValues ->
+        Column(Modifier.padding(paddingValues)) {
             when (state) {
                 is Resource.Loading -> {
                     Box(

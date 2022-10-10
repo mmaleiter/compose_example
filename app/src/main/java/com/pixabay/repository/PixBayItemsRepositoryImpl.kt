@@ -26,7 +26,8 @@ class PixBayItemsRepositoryImpl(
             val resultList = pixaBayService.searchPhotos(searchTerm = searchTerm).hits.map {
                 PixBayUiListItem(it, isFavourite = isFavouriteList.contains(it.id))
             }
-            currentFilterList.value = resultList. map { it.pixBayItem.getTagList()  }.flatten().toSet().toList()
+            currentFilterList.value =
+                resultList.map { it.pixBayItem.getTagList() }.flatten().toSet().toList()
 //
             currentSearchResultList.value = Resource.Success(resultList)
         } catch (e: Throwable) {

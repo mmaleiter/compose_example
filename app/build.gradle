@@ -67,6 +67,9 @@ dependencies {
 
     implementation("androidx.compose.material3:material3:1.0.0-beta01")
 
+
+    implementation("com.flaviofaria:kenburnsview:1.0.7")
+    implementation("com.google.accompanist:accompanist-pager:0.12.0")
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.26.2-beta"
     implementation project(path: ':api_requests')
