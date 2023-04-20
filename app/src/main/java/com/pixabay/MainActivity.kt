@@ -9,8 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.rememberPagerState
-import com.pixabay.ui.theme.ComposeAppTheme
+import com.pixabay.ui.theme.BaseTheme
 import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
 import com.pixabay.ui.detail.DetailScreenLandscape
@@ -24,7 +23,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeAppTheme {
+            BaseTheme {
                 val navController = rememberNavController()
                 val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
                     "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"

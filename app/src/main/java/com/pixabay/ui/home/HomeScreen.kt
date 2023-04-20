@@ -30,7 +30,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pixabay.MainViewModel
 import com.pixabay.ui.base.Resource
-import com.pixabay.ui.base.ScrollableAppBar
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
@@ -43,7 +42,6 @@ fun HomeScreen(
 ) {
 
     val context = LocalContext.current
-    val state = viewModel.imageList.value
 
     var refreshing by remember { mutableStateOf(false) }
     LaunchedEffect(refreshing) {
@@ -80,15 +78,15 @@ fun HomeScreen(
                 onClick = {
                     onNavigate("view_pager_screen")
                 },
-                backgroundColor = Color.Blue,
-                contentColor = Color.White
+//                backgroundColor = Color.Blue,
+//                contentColor = Color.White
             ){
                 Icon(Icons.Filled.Add,"")
             }
         }
     ) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
-            when (state) {
+            when (val  state = viewModel.imageList.collectAsState().value) {
                 is Resource.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),

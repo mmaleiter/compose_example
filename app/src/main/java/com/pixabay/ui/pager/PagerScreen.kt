@@ -1,6 +1,9 @@
 package com.pixabay.ui.pager
 
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
+import android.os.Build
 import android.widget.RatingBar
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -27,7 +30,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
-import com.pixabay.MainViewModel
 import com.pixabay.ui.home.PixBayUiListItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
@@ -119,7 +121,7 @@ fun PagerScreen(
                     )
 
                     Column(
-                        Modifier
+                        modifier = Modifier
                             .align(Alignment.BottomStart)
                             .padding(16.dp)
                     ) {
@@ -135,10 +137,16 @@ fun PagerScreen(
                             LocalContext.current
                         ).apply {
                             rating = imageItem.pixBayItem.likes.toFloat()
-                            progressDrawable.setColorFilter(
-                                android.graphics.Color.parseColor("#ff8800"),
-                                PorterDuff.Mode.SRC_ATOP
-                            )
+                            val color = android.graphics.Color.parseColor("#ff8800")
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                progressDrawable.colorFilter = BlendModeColorFilter(
+                                    color,
+                                    BlendMode.SRC_ATOP
+                                )
+                            } else {
+                                progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                            }
+
                         }
                         AndroidView(
                             factory = { ratingBar },
