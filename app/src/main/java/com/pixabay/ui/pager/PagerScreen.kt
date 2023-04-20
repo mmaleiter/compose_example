@@ -28,6 +28,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.pixabay.MainViewModel
+import com.pixabay.ui.home.PixBayUiListItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
@@ -36,13 +37,12 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun PagerScreen(
-    viewModel: MainViewModel
+    imageList: List<PixBayUiListItem>,
+    pagerCount: Int,
 ) {
 
-    val imageList = viewModel.imageList.value.data!!
-
     val pagerState = rememberPagerState(
-        pageCount = viewModel.imageList.value.data!!.size,  //places.size,
+        pageCount = pagerCount,
         initialOffscreenLimit = 2,
     )
 

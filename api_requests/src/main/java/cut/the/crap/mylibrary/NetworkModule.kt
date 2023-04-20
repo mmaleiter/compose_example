@@ -14,8 +14,6 @@ import javax.inject.Qualifier
 @InstallIn(ViewModelComponent::class)
 class NetworkModule {
 
-    private  val BASE_URL = "https://pixabay.com/"
-
     @Provides
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
         .apply {
@@ -50,6 +48,10 @@ class NetworkModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): PixaBayService {
         return retrofit.create(PixaBayService::class.java)
+    }
+
+    companion object {
+        private const val BASE_URL = "https://pixabay.com/"
     }
 
 }

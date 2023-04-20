@@ -1,10 +1,9 @@
-package cut.the.crap.mylibrary
+package cut.the.crap.mylibrary.models
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 data class PixaBayItem (
-    override val id: Long,
+    val id: Long,
     val pageURL: String,
     val type: String,
     val tags: String,
@@ -30,6 +29,6 @@ data class PixaBayItem (
 
     val user: String,
     val userImageURL: String,
-) : ListAdapterItem
+)
 
 

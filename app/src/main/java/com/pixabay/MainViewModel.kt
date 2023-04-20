@@ -1,12 +1,12 @@
 package com.pixabay
 
-import androidx.compose.runtime.State
 import androidx.lifecycle.*
 import com.pixabay.repository.PixBayItemsRepository
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.home.PixBayUiListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,10 +15,10 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val imageList: State<Resource<List<PixBayUiListItem>>> =
+    val imageList: StateFlow<Resource<List<PixBayUiListItem>>> =
         pixBayItemsRepository.currentSearchResultList
 
-    val filterList: State<List<String>> =
+    val filterList: StateFlow<List<String>> =
         pixBayItemsRepository.currentFilterList
 
     var searchTerm = ""

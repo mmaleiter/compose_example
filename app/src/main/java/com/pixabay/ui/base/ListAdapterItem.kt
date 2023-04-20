@@ -1,4 +1,4 @@
-package cut.the.crap.mylibrary
+package com.pixabay.ui.base
 
 import java.io.Serializable
 

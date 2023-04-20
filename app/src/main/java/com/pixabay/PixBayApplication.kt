@@ -15,7 +15,6 @@ import okhttp3.OkHttpClient
 @HiltAndroidApp
 class PixBayApplication : Application(), ImageLoaderFactory{
 
-
     @OptIn(ExperimentalCoilApi::class)
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)

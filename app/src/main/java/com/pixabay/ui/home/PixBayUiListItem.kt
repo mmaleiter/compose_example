@@ -1,7 +1,7 @@
 package com.pixabay.ui.home
 
-import cut.the.crap.mylibrary.PixaBayItem
-import cut.the.crap.mylibrary.ListAdapterItem
+import cut.the.crap.mylibrary.models.PixaBayItem
+import com.pixabay.ui.base.ListAdapterItem
 
 data class PixBayUiListItem(
     val pixBayItem: PixaBayItem,

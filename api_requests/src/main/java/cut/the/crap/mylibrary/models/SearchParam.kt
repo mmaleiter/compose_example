@@ -1,29 +1,21 @@
-package cut.the.crap.mylibrary
+package cut.the.crap.mylibrary.models
 
-import cut.the.crap.mylibrary.SearchParam.Companion.validCodes
-import cut.the.crap.mylibrary.SearchParam.Companion.validLocales
 import java.util.*
-
-data class SearchResponse (
-    val total: Long,
-    val totalHits: Long,
-    val hits: List<PixaBayItem>
-)
-
-
-fun setLanguageCodeOrDefault(locale: Locale = Locale.getDefault()): String {
-    return when (locale in validLocales) {
-        true -> validCodes[validLocales.indexOf(locale)]
-        else -> {
-            val localDefault = Locale.getDefault()
-            if (localDefault in validLocales) validCodes[validLocales.indexOf(localDefault)]
-            else "en"
-        }
-    }
-}
 
 sealed class SearchParam {
     companion object {
+
+        private fun setLanguageCodeOrDefault(locale: Locale = Locale.getDefault()): String {
+            return when (locale in validLocales) {
+                true -> validCodes[validLocales.indexOf(locale)]
+                else -> {
+                    val localDefault = Locale.getDefault()
+                    if (localDefault in validLocales) validCodes[validLocales.indexOf(localDefault)]
+                    else "en"
+                }
+            }
+        }
+
         val validCodes = listOf(
             "cs", "da", "de", "en", "es", "fr", "id", "it", "hu", "nl", "no", "pl", "pt",
             "ro", "sk", "fi", "sv", "tr", "vi", "th", "bg", "ru", "el", "ja", "ko", "zh"
@@ -37,9 +29,26 @@ sealed class SearchParam {
         )
 
         val validCategories = listOf(
-            "backgrounds", "fashion", "nature", "science", "education",
-            "feelings", "health", "people", "religion", "places", "animals", "industry",
-            "computer", "food", "sports", "transportation", "travel", "buildings", "business", "music"
+            "backgrounds",
+            "fashion",
+            "nature",
+            "science",
+            "education",
+            "feelings",
+            "health",
+            "people",
+            "religion",
+            "places",
+            "animals",
+            "industry",
+            "computer",
+            "food",
+            "sports",
+            "transportation",
+            "travel",
+            "buildings",
+            "business",
+            "music"
         )
 
         val validImageTypes = listOf(
@@ -48,6 +57,7 @@ sealed class SearchParam {
 
         val validOrientation = listOf("all", "horizontal", "vertical")
     }
+
     data class ImageSearchParams(
         val searchText: String = "",
         var languageCode: String = setLanguageCodeOrDefault(),
@@ -61,14 +71,10 @@ sealed class SearchParam {
         var order: String = "popular",   // "popular", "latest"
         val page: String = "1",
         val perPage: String = "20",  // 3 - 200
-    ) {
-
-
-    }
+    )
 
     data class VideoSearchParams(
         val searchText: String = "",
         val languageCode: String = setLanguageCodeOrDefault(),
-
-        )
+    )
 }

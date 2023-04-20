@@ -3,11 +3,13 @@ package com.pixabay
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.pager.rememberPagerState
 import com.pixabay.ui.theme.ComposeAppTheme
 import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
@@ -27,33 +29,36 @@ class MainActivity : ComponentActivity() {
                 val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
                     "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
                 }
-                val model =
+                val viewModel =
                     viewModel<MainViewModel>(viewModelStoreOwner = viewModelStoreOwner)
+
+                val imageList = viewModel.imageList.collectAsState().value.data ?: emptyList()
+                val pageCount = viewModel.imageList.collectAsState().value.data?.size ?: 0
 
                 NavHost(
                     navController = navController,
                     startDestination = "home_screen"
                 ) {
                     composable(route = "home_screen") {
-                        HomeScreen(onNavigate = navController::navigate, viewModel = model)
+                        HomeScreen(onNavigate = navController::navigate, viewModel = viewModel)
                     }
                     composable(route = "detail_screen") {
                         ScreenOrientationHandler(landscapeContent = {
                             DetailScreenLandscape(
-                                viewModel = model,
+                                viewModel = viewModel,
                                 onNavigate = navController::navigate
                             )
                         },
                             portraitContent = {
                                 DetailScreen(
-                                    viewModel = model,
+                                    viewModel = viewModel,
                                     onNavigate = navController::navigate
                                 )
                             })
 
                     }
                     composable(route = "view_pager_screen") {
-                        PagerScreen(viewModel = model)
+                        PagerScreen(imageList, pageCount)
                     }
                 }
             }

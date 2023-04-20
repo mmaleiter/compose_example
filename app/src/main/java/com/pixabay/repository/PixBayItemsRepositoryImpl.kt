@@ -1,21 +1,19 @@
 package com.pixabay.repository
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import cut.the.crap.mylibrary.PixaBayService
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.home.PixBayUiListItem
 import com.pixabay.ui.home.getTagList
+import cut.the.crap.mylibrary.PixaBayService
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class PixBayItemsRepositoryImpl(
     private val pixaBayService: PixaBayService,
 ) : PixBayItemsRepository {
 
     override val currentSearchResultList =
-        mutableStateOf(Resource.success<List<PixBayUiListItem>>(data = emptyList()))
+        MutableStateFlow(Resource.success<List<PixBayUiListItem>>(data = emptyList()))
 
-    override val currentFilterList = mutableStateOf(emptyList<String>())
-
+    override val currentFilterList = MutableStateFlow(emptyList<String>())
 
     override val isFavouriteList: MutableList<Long> = mutableListOf()
 
@@ -28,7 +26,7 @@ class PixBayItemsRepositoryImpl(
             }
             currentFilterList.value =
                 resultList.map { it.pixBayItem.getTagList() }.flatten().toSet().toList()
-//
+
             currentSearchResultList.value = Resource.Success(resultList)
         } catch (e: Throwable) {
             currentSearchResultList.value = Resource.Error(data = backupState.data, cause = e)
