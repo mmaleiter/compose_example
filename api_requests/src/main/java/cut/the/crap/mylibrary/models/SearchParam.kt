@@ -16,46 +16,52 @@ sealed class SearchParam {
             }
         }
 
-        val validCodes = listOf(
-            "cs", "da", "de", "en", "es", "fr", "id", "it", "hu", "nl", "no", "pl", "pt",
-            "ro", "sk", "fi", "sv", "tr", "vi", "th", "bg", "ru", "el", "ja", "ko", "zh"
-        )
-        val validLocales = validCodes.map { Locale(it) }
+        val validCodes by lazy {
+            listOf(
+                "cs", "da", "de", "en", "es", "fr", "id", "it", "hu", "nl", "no", "pl", "pt",
+                "ro", "sk", "fi", "sv", "tr", "vi", "th", "bg", "ru", "el", "ja", "ko", "zh"
+            )
+        }
+        val validLocales by lazy {
+            validCodes.map { Locale(it) }
+        }
 
-        val validColors = listOf(
-            "grayscale", "transparent", "red", "orange", "yellow",
-            "green", "turquoise", "blue", "lilac", "pink",
-            "white", "gray", "black", "brown"
-        )
+        val validColors by lazy {
+            listOf(
+                "grayscale", "transparent", "red", "orange", "yellow",
+                "green", "turquoise", "blue", "lilac", "pink",
+                "white", "gray", "black", "brown"
+            )
+        }
 
-        val validCategories = listOf(
-            "backgrounds",
-            "fashion",
-            "nature",
-            "science",
-            "education",
-            "feelings",
-            "health",
-            "people",
-            "religion",
-            "places",
-            "animals",
-            "industry",
-            "computer",
-            "food",
-            "sports",
-            "transportation",
-            "travel",
-            "buildings",
-            "business",
-            "music"
-        )
+        val validCategories by lazy {
+            listOf(
+                "backgrounds",
+                "fashion",
+                "nature",
+                "science",
+                "education",
+                "feelings",
+                "health",
+                "people",
+                "religion",
+                "places",
+                "animals",
+                "industry",
+                "computer",
+                "food",
+                "sports",
+                "transportation",
+                "travel",
+                "buildings",
+                "business",
+                "music"
+            )
+        }
 
-        val validImageTypes = listOf(
-            "all", "photo", "illustration", "vector"
-        )
+        val validImageTypes by lazy { listOf("all", "photo", "illustration", "vector") }
 
-        val validOrientation = listOf("all", "horizontal", "vertical")
+        val validOrientation by lazy { listOf("all", "horizontal", "vertical") }
     }
 
     data class ImageSearchParams(
