@@ -70,7 +70,7 @@ dependencies {
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    implementation("androidx.compose.material3:material3:1.0.0-beta01")
+//    implementation("androidx.compose.material3:material3:1.0.0-beta01")
 
 
     implementation("com.flaviofaria:kenburnsview:1.0.7")

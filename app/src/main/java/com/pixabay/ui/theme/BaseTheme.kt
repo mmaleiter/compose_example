@@ -1,4 +1,4 @@
-package com.pixabay.ui.theme
+package com.pixabay.ui.base
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
