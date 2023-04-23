@@ -16,21 +16,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pixabay.MainViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchWidget(
     viewModel: MainViewModel = hiltViewModel()
 ) {
 
 //    val (focusRequester) = FocusRequester.createRefs()
-//    val keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 //    val context = LocalContext.current
 
     val inputValue = rememberSaveable(
@@ -55,8 +58,9 @@ fun SearchWidget(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = rememberRipple(bounded = false),
-                        onClick = { viewModel.executeSearch() }
-                    ).padding(8.dp)
+                        onClick = { viewModel.executeSearch(); keyboardController?.hide()}
+                    )
+                    .padding(8.dp)
             )
         },
         trailingIcon = {
@@ -84,7 +88,7 @@ fun SearchWidget(
         ),
         keyboardActions = KeyboardActions(
             onSearch = {
-//                        keyboardController?.hide()
+                keyboardController?.hide()
                 viewModel.executeSearch()
             }
         ),

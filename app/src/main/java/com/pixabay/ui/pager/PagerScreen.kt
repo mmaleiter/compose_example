@@ -64,6 +64,7 @@ fun PagerScreen(
             text = "Beautiful",
             style = MaterialTheme.typography.h3,
             modifier = Modifier.padding(start = 16.dp, top = 40.dp),
+            color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Black
         )
         Text(
@@ -85,12 +86,7 @@ fun PagerScreen(
             Card(
                 modifier = Modifier
                     .graphicsLayer {
-                        // Calculate the absolute offset for the current page from the
-                        // scroll position. We use the absolute value which allows us to mirror
-                        // any effects for both directions
                         val pageOffset = calculateCurrentOffsetForPage(pageIndex).absoluteValue
-
-                        // We animate the scaleX + scaleY, between 85% and 100%
                         lerp(
                             start = ScaleFactor(0.85f, 0.85f),
                             stop = ScaleFactor(1f, 1f),

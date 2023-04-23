@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pixabay.MainViewModel
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.theme.provideTextStyle
@@ -51,8 +50,8 @@ fun HomeScreen(
         }
     }
 
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(color = MaterialTheme.colors.primary)
+//    val systemUiController = rememberSystemUiController()
+//    systemUiController.setSystemBarsColor(color = MaterialTheme.colors.primary)
 
     val toolbarHeight = 144.dp
     val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
@@ -75,13 +74,15 @@ fun HomeScreen(
             .nestedScroll(nestedScrollConnection),
         floatingActionButton = {
             FloatingActionButton(
+                backgroundColor = Color.Yellow,
+                contentColor = Color.Red,
                 onClick = {
                     onNavigate("view_pager_screen")
                 },
 //                backgroundColor = Color.Blue,
 //                contentColor = Color.White
             ){
-                Icon(Icons.Filled.Add,"")
+                Icon(Icons.Filled.Home,"")
             }
         }
     ) { paddingValues ->

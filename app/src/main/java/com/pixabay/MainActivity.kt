@@ -9,7 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pixabay.ui.base.BaseTheme
+import com.pixabay.ui.theme.BaseTheme
 import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
 import com.pixabay.ui.detail.DetailScreenLandscape
