@@ -42,10 +42,7 @@ fun PagerScreen(
     imageList: List<PixBayUiListItem>,
 ) {
 
-    val pagerState = rememberPagerState(
-        pageCount = imageList.size,
-        initialOffscreenLimit = 2,
-    )
+    val pagerState = rememberPagerState()
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -81,6 +78,7 @@ fun PagerScreen(
                     top = 40.dp,
                     bottom = 40.dp
                 ),
+            count = imageList.size
         ) { pageIndex ->
             Card(
                 modifier = Modifier

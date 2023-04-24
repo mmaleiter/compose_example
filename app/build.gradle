@@ -75,14 +75,14 @@ dependencies {
 
 
     implementation("com.flaviofaria:kenburnsview:1.0.7")
-    implementation("com.google.accompanist:accompanist-pager:0.12.0")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.26.2-beta"
     implementation project(path: ':api_requests')
 //    implementation "androidx.compose.compiler:compiler:$compose_version"
 
     // coil
-    implementation "io.coil-kt:coil-compose:2.0.0-rc01"
+    implementation "io.coil-kt:coil-compose:2.0.0"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
