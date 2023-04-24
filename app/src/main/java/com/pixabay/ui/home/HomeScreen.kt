@@ -27,17 +27,22 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.pixabay.MainViewModel
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     onNavigate: (String) -> Unit,
-    viewModel: MainViewModel
+    setSearchTerm: (String) -> Unit,
+    showDetailScreen: (PixBayUiListItem) -> Unit,
+    toggleFavourite: (PixBayUiListItem) -> Unit,
+    filterList: StateFlow<List<String>>,
+    imageList: StateFlow<Resource<List<PixBayUiListItem>>>,
+    executeSearch: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -79,15 +84,14 @@ fun HomeScreen(
                 onClick = {
                     onNavigate("view_pager_screen")
                 },
-//                backgroundColor = Color.Blue,
-//                contentColor = Color.White
-            ){
-                Icon(Icons.Filled.Home,"")
+            ) {
+                Icon(Icons.Filled.Home, "")
             }
         }
     ) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
-            when (val  state = viewModel.imageList.collectAsState().value) {
+
+            when (val state = imageList.collectAsState().value) {
                 is Resource.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -96,12 +100,13 @@ fun HomeScreen(
                         CircularProgressIndicator()
                     }
                 }
+
                 is Resource.Success -> {
                     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = refreshing)
                     SwipeRefresh(
                         indicatorPadding = PaddingValues(top = 144.dp),
                         state = swipeRefreshState,
-                        onRefresh = { viewModel.executeSearch() },
+                        onRefresh = { executeSearch() },
                     ) {
                         LazyColumn(
                             modifier = Modifier
@@ -112,12 +117,18 @@ fun HomeScreen(
                                 Spacer(modifier = Modifier.height(144.dp))
                             }
                             items(state.data.orEmpty()) { pixabayItem ->
-                                PixabayListItem(pixabayItem, viewModel, onNavigate)
+                                PixabayListItem(
+                                    pixabayItem,
+                                    showDetailScreen,
+                                    toggleFavourite,
+                                    onNavigate
+                                )
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     Toast.makeText(
                         context,
@@ -136,8 +147,8 @@ fun HomeScreen(
                 LazyRow(
                     modifier = Modifier.padding(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    ) {
-                    val itemStrings = viewModel.filterList.value
+                ) {
+                    val itemStrings = filterList.value
 
                     val itemData = itemStrings.map { FilterChipData(it) }
 
@@ -145,7 +156,7 @@ fun HomeScreen(
                         item {
                             Surface(
                                 color = if (it.isSelected) MaterialTheme.colors.surface
-                                        else MaterialTheme.colors.primary,
+                                else MaterialTheme.colors.primary,
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .border(
@@ -167,10 +178,12 @@ fun HomeScreen(
                         }
                     }
                 }
-                SearchWidget()
+
+                SearchWidget(setSearchTerm, executeSearch)
             }
         }
     }
+
 }
 
 data class FilterChipData(

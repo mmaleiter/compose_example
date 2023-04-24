@@ -36,6 +36,10 @@ class MainViewModel @Inject constructor(
 
     val selectedFilterChips = mutableListOf<String>()
 
+    fun setSearchTermState(searchTerm: String) {
+        this.searchTerm = searchTerm
+    }
+
     fun showDetailScreen(pixaItem: PixBayUiListItem) {
         savedStateHandle["detailItem"] = pixaItem
         detailItem = pixaItem

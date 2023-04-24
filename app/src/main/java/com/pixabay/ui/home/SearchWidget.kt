@@ -23,13 +23,12 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.pixabay.MainViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchWidget(
-    viewModel: MainViewModel = hiltViewModel()
+    setSearchText: (String) -> Unit,
+    executeSearch: () -> Unit,
 ) {
 
 //    val (focusRequester) = FocusRequester.createRefs()
@@ -47,7 +46,7 @@ fun SearchWidget(
         shape = CircleShape,
         onValueChange = {
             inputValue.value = it
-            viewModel.searchTerm = it.text
+            setSearchText(it.text)
         },
         leadingIcon = {
             Icon(
@@ -58,7 +57,7 @@ fun SearchWidget(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = rememberRipple(bounded = false),
-                        onClick = { viewModel.executeSearch(); keyboardController?.hide()}
+                        onClick = { executeSearch(); keyboardController?.hide()}
                     )
                     .padding(8.dp)
             )
@@ -89,7 +88,7 @@ fun SearchWidget(
         keyboardActions = KeyboardActions(
             onSearch = {
                 keyboardController?.hide()
-                viewModel.executeSearch()
+                executeSearch()
             }
         ),
         placeholder = {

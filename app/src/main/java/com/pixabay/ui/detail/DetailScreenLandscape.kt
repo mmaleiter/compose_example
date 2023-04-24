@@ -30,14 +30,16 @@ import androidx.compose.ui.unit.em
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.pixabay.MainViewModel
 import com.pixabay.ui.theme.provideTextStyle
+import cut.the.crap.mylibrary.models.PixaBayItem
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailScreenLandscape(viewModel: MainViewModel,  onNavigate: (String) -> Unit) {
-    val item = viewModel.detailItem.pixBayItem
+fun DetailScreenLandscape(
+    pixaBayItem: PixaBayItem,
+    onNavigate: (String) -> Unit
+) {
     var offsetY by remember { mutableStateOf(0f) }
 
     val systemUiController = rememberSystemUiController()
@@ -60,7 +62,7 @@ fun DetailScreenLandscape(viewModel: MainViewModel,  onNavigate: (String) -> Uni
         Column() {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(viewModel.detailItem.pixBayItem.largeImageURL)
+                    .data(pixaBayItem.largeImageURL)
                     .crossfade(true)
                     .build(),
                 contentDescription = stringResource(android.R.string.cancel),
@@ -95,7 +97,7 @@ fun DetailScreenLandscape(viewModel: MainViewModel,  onNavigate: (String) -> Uni
             Spacer(modifier = Modifier.height(48.dp))
 
             Surface(
-                onClick = { uriHandler.openUri(item.pageURL) },
+                onClick = { uriHandler.openUri(pixaBayItem.pageURL) },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .border(
@@ -123,19 +125,19 @@ fun DetailScreenLandscape(viewModel: MainViewModel,  onNavigate: (String) -> Uni
 
         Column() {
             Text(
-                text = item.user,
+                text = pixaBayItem.user,
                 style = provideTextStyle(color = textColor),
                 modifier = Modifier.padding(16.dp)
             )
 
             Text(
-                text = "Has ${item.likes} likes.",
+                text = "Has ${pixaBayItem.likes} likes.",
                 style = provideTextStyle(color = textColor),
                 modifier = Modifier.padding(16.dp)
             )
 
             Text(
-                text = "Has ${item.downloads} downloads.",
+                text = "Has ${pixaBayItem.downloads} downloads.",
                 style = provideTextStyle(
                     color = textColor,
                     fontWeight = FontWeight.SemiBold,

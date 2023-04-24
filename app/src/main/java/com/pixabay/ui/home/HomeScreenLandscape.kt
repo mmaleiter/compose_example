@@ -26,20 +26,25 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.pixabay.MainViewModel
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenLandscape(
     onNavigate: (String) -> Unit,
-    viewModel: MainViewModel
+    setSearchTerm: (String) -> Unit,
+    showDetailScreen: (PixBayUiListItem) -> Unit,
+    toggleFavourite: (PixBayUiListItem) -> Unit,
+    filterList: StateFlow<List<String>>,
+    imageList: StateFlow<Resource<List<PixBayUiListItem>>>,
+    executeSearch: () -> Unit,
 ) {
         val context = LocalContext.current
-        val state = viewModel.imageList.value
+        val state = imageList.collectAsState().value
 
         var refreshing by remember { mutableStateOf(false) }
         LaunchedEffect(refreshing) {
@@ -89,7 +94,7 @@ fun HomeScreenLandscape(
                         SwipeRefresh(
                             indicatorPadding = PaddingValues(top = 144.dp),
                             state = swipeRefreshState,
-                            onRefresh = { viewModel.executeSearch() },
+                            onRefresh = { executeSearch() },
                         ) {
                             LazyColumn(
                                 modifier = Modifier
@@ -100,7 +105,7 @@ fun HomeScreenLandscape(
                                     Spacer(modifier = Modifier.height(144.dp))
                                 }
                                 items(state.data.orEmpty()) { pixabayItem ->
-                                    PixabayListItem(pixabayItem, viewModel, onNavigate)
+                                    PixabayListItem(pixabayItem, showDetailScreen, toggleFavourite, onNavigate)
                                     Spacer(modifier = Modifier.height(16.dp))
                                 }
                             }
@@ -126,7 +131,7 @@ fun HomeScreenLandscape(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         val itemStrings =
-                            viewModel.imageList.value.data?.
+                            imageList.value.data?.
                             map { it.pixBayItem.getTagList()  }?.flatten()?.toSet()?.toList()
 
                         val itemData = itemStrings?.map { FilterChipData(it) }
@@ -157,7 +162,7 @@ fun HomeScreenLandscape(
                             }
                         }
                     }
-                    SearchWidget()
+                    SearchWidget(setSearchText = setSearchTerm, executeSearch = executeSearch)
                 }
 
             }

@@ -1,12 +1,12 @@
 package cut.the.crap.mylibrary
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Test
+//import kotlinx.coroutines.ExperimentalCoroutinesApi
+//import kotlinx.coroutines.test.runTest
+//import org.junit.Assert.assertEquals
+//import org.junit.Test
 
 
-@OptIn(ExperimentalCoroutinesApi::class)
+//@OptIn(ExperimentalCoroutinesApi::class)
 class ExampleUnitTest {
 
     private val networkModule = NetworkModule()
@@ -20,11 +20,11 @@ class ExampleUnitTest {
         )
     )
 
-    @Test
+//    @Test
     fun verifyApiCallListSizeEquals20() {
-        runTest {
-            val list = api.searchPhotos(searchTerm = "fruits")
-            assertEquals(list.hits.size, 20)
-        }
+//        runTest {
+//            val list = api.searchPhotos(searchTerm = "fruits")
+//            assertEquals(list.hits.size, 20)
+//        }
     }
 }

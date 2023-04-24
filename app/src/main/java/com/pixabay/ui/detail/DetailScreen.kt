@@ -30,15 +30,17 @@ import androidx.compose.ui.unit.em
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.pixabay.MainViewModel
 import com.pixabay.ui.theme.provideTextStyle
+import cut.the.crap.mylibrary.models.PixaBayItem
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailScreen(viewModel: MainViewModel, onNavigate: (String) -> Unit) {
+fun DetailScreen(
+    pixaBayItem: PixaBayItem,
+    onNavigate: (String) -> Unit) {
 
-    val item = viewModel.detailItem.pixBayItem
+    val item : PixaBayItem = pixaBayItem
     var offsetY by remember { mutableStateOf(0f) }
 
     val systemUiController = rememberSystemUiController()
@@ -58,7 +60,7 @@ fun DetailScreen(viewModel: MainViewModel, onNavigate: (String) -> Unit) {
         .fillMaxSize()) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(viewModel.detailItem.pixBayItem.largeImageURL)
+                .data(pixaBayItem.largeImageURL)
                 .crossfade(true)
                 .build(),
             contentDescription = stringResource(android.R.string.cancel),

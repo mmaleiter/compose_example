@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.pixabay.MainViewModel
 import com.pixabay.R
 import com.pixabay.ui.theme.lightGreyAlpha
 import com.pixabay.ui.theme.primaryCharcoal
@@ -27,7 +26,8 @@ import com.pixabay.ui.theme.primaryCharcoal
 @Composable
 fun PixabayListItem(
     pixabayItem: PixBayUiListItem,
-    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    showDetailScreen: (PixBayUiListItem) -> Unit,
+    toggleFavourite: (PixBayUiListItem) -> Unit,
     onNavigate: (String) -> Unit
 ) {
     Box(
@@ -39,7 +39,7 @@ fun PixabayListItem(
         Column(
             modifier = Modifier
                 .clickable {
-                    viewModel.showDetailScreen(pixabayItem)
+                    showDetailScreen(pixabayItem)
                     onNavigate("detail_screen")
                 }
                 .background(
@@ -121,7 +121,7 @@ fun PixabayListItem(
 
                     }
                 }
-                IconButton(onClick = { viewModel.toggleFavourite(pixabayItem) }) {
+                IconButton(onClick = { toggleFavourite(pixabayItem) }) {
                     Icon(
                         painter =
                         if (isFavourite) painterResource(id = R.drawable.ic_favorite_filled)

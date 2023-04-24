@@ -40,11 +40,10 @@ import kotlin.math.absoluteValue
 @Composable
 fun PagerScreen(
     imageList: List<PixBayUiListItem>,
-    pagerCount: Int,
 ) {
 
     val pagerState = rememberPagerState(
-        pageCount = pagerCount,
+        pageCount = imageList.size,
         initialOffscreenLimit = 2,
     )
 
@@ -121,7 +120,6 @@ fun PagerScreen(
                             .align(Alignment.BottomStart)
                             .padding(16.dp)
                     ) {
-
                         Text(
                             text = imageItem.pixBayItem.user,
                             style = MaterialTheme.typography.h5,

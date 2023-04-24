@@ -14,6 +14,7 @@ import com.pixabay.ui.base.ScreenOrientationHandler
 import com.pixabay.ui.detail.DetailScreen
 import com.pixabay.ui.detail.DetailScreenLandscape
 import com.pixabay.ui.home.HomeScreen
+import com.pixabay.ui.home.HomeScreenLandscape
 import com.pixabay.ui.pager.PagerScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,33 +32,56 @@ class MainActivity : ComponentActivity() {
                 val viewModel =
                     viewModel<MainViewModel>(viewModelStoreOwner = viewModelStoreOwner)
 
-                val imageList = viewModel.imageList.collectAsState().value.data ?: emptyList()
-                val pageCount = viewModel.imageList.collectAsState().value.data?.size ?: 0
-
                 NavHost(
                     navController = navController,
                     startDestination = "home_screen"
                 ) {
                     composable(route = "home_screen") {
-                        HomeScreen(onNavigate = navController::navigate, viewModel = viewModel)
+                        ScreenOrientationHandler(
+                            landscapeContent = {
+                                HomeScreenLandscape(
+                                    onNavigate = navController::navigate,
+                                    setSearchTerm = viewModel::setSearchTermState,
+                                    filterList = viewModel.filterList,
+                                    imageList = viewModel.imageList,
+                                    executeSearch = viewModel::executeSearch,
+                                    showDetailScreen = viewModel::showDetailScreen,
+                                    toggleFavourite = viewModel::toggleFavourite
+                                )
+                            },
+
+                            portraitContent = {
+                                HomeScreen(
+                                    onNavigate = navController::navigate,
+                                    setSearchTerm = viewModel::setSearchTermState,
+                                    filterList = viewModel.filterList,
+                                    imageList = viewModel.imageList,
+                                    executeSearch = viewModel::executeSearch,
+                                    showDetailScreen = viewModel::showDetailScreen,
+                                    toggleFavourite = viewModel::toggleFavourite
+                                )
+                            },
+                        )
                     }
                     composable(route = "detail_screen") {
                         ScreenOrientationHandler(landscapeContent = {
                             DetailScreenLandscape(
-                                viewModel = viewModel,
+                                pixaBayItem = viewModel.detailItem.pixBayItem,
                                 onNavigate = navController::navigate
                             )
                         },
                             portraitContent = {
                                 DetailScreen(
-                                    viewModel = viewModel,
+                                    pixaBayItem = viewModel.detailItem.pixBayItem,
                                     onNavigate = navController::navigate
                                 )
                             })
 
                     }
                     composable(route = "view_pager_screen") {
-                        PagerScreen(imageList, pageCount)
+                        PagerScreen(
+                            imageList = viewModel.imageList.collectAsState().value.data ?: emptyList()
+                        )
                     }
                 }
             }
