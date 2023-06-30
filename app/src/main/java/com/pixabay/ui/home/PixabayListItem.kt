@@ -109,16 +109,16 @@ fun PixabayListItem(
                         modifier = Modifier
                             .border(
                                 width = 1.dp,
-                                color = MaterialTheme.colors.primary,
+                                color = MaterialTheme.colors.onBackground,
                                 shape = CircleShape
                             )
                             .padding(start = 16.dp, end = 16.dp)
                     ) {
                         Text(
                             text = "Visit web site",
-                            color = MaterialTheme.colors.primary,
+                            color = MaterialTheme.colors.onSurface,
+                            modifier = Modifier.background(if(isSystemInDarkTheme()) primaryCharcoal else lightGreyAlpha),
                         )
-
                     }
                 }
                 IconButton(onClick = { toggleFavourite(pixabayItem) }) {

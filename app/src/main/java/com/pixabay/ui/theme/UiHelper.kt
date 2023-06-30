@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun provideTextStyle(
-    color: Color = MaterialTheme.colors.onBackground,
+    color: Color = MaterialTheme.colors.onSurface,
     fontSize: TextUnit = 16.sp,
     fontFamily: GenericFontFamily = FontFamily.Monospace,
     fontWeight: FontWeight = FontWeight.W800,
