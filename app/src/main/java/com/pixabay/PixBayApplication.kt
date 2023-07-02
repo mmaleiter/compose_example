@@ -1,6 +1,7 @@
 package com.pixabay
 
 import android.app.Application
+import android.os.StrictMode
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.annotation.ExperimentalCoilApi
@@ -14,6 +15,13 @@ import okhttp3.OkHttpClient
 
 @HiltAndroidApp
 class PixBayApplication : Application(), ImageLoaderFactory{
+
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            StrictMode.enableDefaults()
+        }
+    }
 
     @OptIn(ExperimentalCoilApi::class)
     override fun newImageLoader(): ImageLoader {

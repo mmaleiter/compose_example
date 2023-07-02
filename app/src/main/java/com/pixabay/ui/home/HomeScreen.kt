@@ -25,8 +25,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pixabay.ui.base.Resource
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
@@ -42,6 +44,7 @@ fun HomeScreen(
     toggleFavourite: (PixBayUiListItem) -> Unit,
     filterList: StateFlow<List<String>>,
     imageList: StateFlow<Resource<List<PixBayUiListItem>>>,
+    commonColor: Color,
     executeSearch: () -> Unit,
 ) {
 
@@ -55,8 +58,8 @@ fun HomeScreen(
         }
     }
 
-//    val systemUiController = rememberSystemUiController()
-//    systemUiController.setSystemBarsColor(color = MaterialTheme.colors.primary)
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(commonColor)
 
     val toolbarHeight = 144.dp
     val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
@@ -91,7 +94,7 @@ fun HomeScreen(
     ) { paddingValues ->
         Column(Modifier.padding(paddingValues)) {
 
-            when (val state = imageList.collectAsState().value) {
+            when (val state = imageList.collectAsStateWithLifecycle().value) {
                 is Resource.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -143,7 +146,7 @@ fun HomeScreen(
             modifier = Modifier
                 .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt() - 48) },
         ) {
-            Column(modifier = Modifier.background(MaterialTheme.colors.primary)) {
+            Column(modifier = Modifier.background(commonColor)) {
                 LazyRow(
                     modifier = Modifier.padding(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),

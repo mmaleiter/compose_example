@@ -1,5 +1,6 @@
 package com.pixabay
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.*
 import com.pixabay.repository.PixBayItemsRepository
 import com.pixabay.ui.base.Resource
@@ -25,6 +26,10 @@ class MainViewModel @Inject constructor(
 
     lateinit var detailItem: PixBayUiListItem
 
+
+    var commonColor: Color = Color(0xFFBB86FC)
+        private set
+
     init {
         viewModelScope.launch {
             pixBayItemsRepository.searchImages()
@@ -43,6 +48,10 @@ class MainViewModel @Inject constructor(
     fun showDetailScreen(pixaItem: PixBayUiListItem) {
         savedStateHandle["detailItem"] = pixaItem
         detailItem = pixaItem
+    }
+
+   fun newCommonColor (newColor: Color) {
+        commonColor = newColor
     }
 
     fun executeSearch() {

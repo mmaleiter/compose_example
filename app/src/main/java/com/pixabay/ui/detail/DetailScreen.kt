@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +39,7 @@ import kotlin.math.roundToInt
 @Composable
 fun DetailScreen(
     pixaBayItem: PixaBayItem,
+    commonColor: (Color) -> Unit,
     onNavigate: (String) -> Unit) {
 
     val item : PixaBayItem = pixaBayItem
@@ -48,11 +50,11 @@ fun DetailScreen(
     val uriHandler = LocalUriHandler.current
 
     var textColor by remember {
-        mutableStateOf(androidx.compose.ui.graphics.Color.Red)
+        mutableStateOf(Color.Red)
     }
 
     var backgroundColor by remember {
-        mutableStateOf(androidx.compose.ui.graphics.Color.White)
+        mutableStateOf(Color.White)
     }
 
     Column(modifier = Modifier
@@ -67,9 +69,10 @@ fun DetailScreen(
             contentScale = ContentScale.Crop,
             onSuccess = {
                 val color = getMeanColor((it.result.drawable as BitmapDrawable).bitmap)
-                            backgroundColor = androidx.compose.ui.graphics.Color(color)
-                systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color(color))
-                textColor = androidx.compose.ui.graphics.Color(getContrastColor(color))
+                            backgroundColor = Color(color)
+                commonColor(Color(color))
+                systemUiController.setSystemBarsColor(color = Color(color))
+                textColor = Color(getContrastColor(color))
             },
             modifier = Modifier
                 .graphicsLayer {

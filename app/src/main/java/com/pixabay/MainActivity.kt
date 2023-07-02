@@ -3,7 +3,7 @@ package com.pixabay
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
                                     imageList = viewModel.imageList,
                                     executeSearch = viewModel::executeSearch,
                                     showDetailScreen = viewModel::showDetailScreen,
+                                    commonColor = viewModel.commonColor,
                                     toggleFavourite = viewModel::toggleFavourite
                                 )
                             },
@@ -58,6 +59,7 @@ class MainActivity : ComponentActivity() {
                                     imageList = viewModel.imageList,
                                     executeSearch = viewModel::executeSearch,
                                     showDetailScreen = viewModel::showDetailScreen,
+                                    commonColor = viewModel.commonColor,
                                     toggleFavourite = viewModel::toggleFavourite
                                 )
                             },
@@ -73,14 +75,15 @@ class MainActivity : ComponentActivity() {
                             portraitContent = {
                                 DetailScreen(
                                     pixaBayItem = viewModel.detailItem.pixBayItem,
-                                    onNavigate = navController::navigate
+                                    onNavigate = navController::navigate,
+                                    commonColor = viewModel::newCommonColor
                                 )
                             })
 
                     }
                     composable(route = "view_pager_screen") {
                         PagerScreen(
-                            imageList = viewModel.imageList.collectAsState().value.data ?: emptyList()
+                            imageList = viewModel.imageList.collectAsStateWithLifecycle().value.data ?: emptyList()
                         )
                     }
                 }
