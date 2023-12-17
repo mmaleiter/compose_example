@@ -3,6 +3,7 @@ package com.pixabay.ui.home
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,6 +23,8 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -30,6 +33,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pixabay.ui.base.Resource
+import com.pixabay.ui.theme.lightGreyAlpha
+import com.pixabay.ui.theme.primaryCharcoal
 import com.pixabay.ui.theme.provideTextStyle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -82,8 +87,8 @@ fun HomeScreen(
             .nestedScroll(nestedScrollConnection),
         floatingActionButton = {
             FloatingActionButton(
-                backgroundColor = Color.Yellow,
-                contentColor = Color.Red,
+                backgroundColor = commonColor,
+                contentColor = calculateComplementaryColor(commonColor),
                 onClick = {
                     onNavigate("view_pager_screen")
                 },
@@ -119,6 +124,7 @@ fun HomeScreen(
                             item {
                                 Spacer(modifier = Modifier.height(144.dp))
                             }
+
                             items(state.data.orEmpty()) { pixabayItem ->
                                 PixabayListItem(
                                     pixabayItem,
@@ -146,7 +152,9 @@ fun HomeScreen(
             modifier = Modifier
                 .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt() - 48) },
         ) {
-            Column(modifier = Modifier.background(commonColor)) {
+            Column(modifier = Modifier
+                .background(commonColor)
+                .padding(top = 16.dp)) {
                 LazyRow(
                     modifier = Modifier.padding(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -158,8 +166,9 @@ fun HomeScreen(
                     itemData.forEach {
                         item {
                             Surface(
-                                color = if (it.isSelected) MaterialTheme.colors.surface
-                                else MaterialTheme.colors.primary,
+                                color = calculateComplementaryColor(commonColor),
+//                                if (it.isSelected) MaterialTheme.colors.surface
+//                                else MaterialTheme.colors.primary,
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .border(
@@ -194,3 +203,48 @@ data class FilterChipData(
     val isSelected: Boolean = false,
 
     )
+
+fun calculateComplementaryColor(color: Color): Color {
+    // Extract the red, green, and blue components from the color
+    val red = color.red
+    val green = color.green
+    val blue = color.blue
+
+    // Calculate the complementary color by subtracting each component from 1.0
+    val complementaryRed = 1.0f - red
+    val complementaryGreen = 1.0f - green
+    val complementaryBlue = 1.0f - blue
+
+    // Create a new Color object with the complementary color components
+    return Color(complementaryRed, complementaryGreen, complementaryBlue)
+}
+
+
+////      ##########################
+interface UnityComposeComponent {
+    @Composable
+    fun CreateComposableFunction()
+
+}
+
+data class IconComponent(val resId: Int) : UnityComposeComponent {
+    @Composable
+    override fun CreateComposableFunction() {
+        return Icon(
+            painter = painterResource(id = resId),
+            tint = MaterialTheme.colors.primary,
+            contentDescription = "Search"
+        )
+    }
+}
+
+data class TextComponent(val title: Int) : UnityComposeComponent{
+    @Composable
+    override fun CreateComposableFunction() {
+        return Text(
+            text = stringResource(id = title),
+            color = MaterialTheme.colors.onSurface,
+            modifier = Modifier.background(if(isSystemInDarkTheme()) primaryCharcoal else lightGreyAlpha),
+        )
+    }
+}

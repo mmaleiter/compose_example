@@ -19,11 +19,7 @@ sealed class Resource<T>(val data: T? = null, val message: String? = null) {
             return Loading(data)
         }
 
-        fun <T> success(): Resource<T> {
-            return Success(null)
-        }
-
-        fun <T> success(data: T?): Resource<T> {
+        fun <T> success(data: T? = null): Resource<T> {
             return Success(data)
         }
 

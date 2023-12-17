@@ -1,0 +1,25 @@
+name: Enforce Branch Naming Convention
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  enforce-branch-naming:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Branch Naming Convention
+        run: |
+          # Get the branch name from the pull request
+          branch_name=$(echo ${{ github.event.pull_request.head.ref }})
+          
+          # Define your regex pattern
+          regex_pattern="^feature/.*$"  # Replace with your desired regex pattern
+          
+          # Check if the branch name matches the regex pattern
+          if [[ ! "$branch_name" =~ $regex_pattern ]]; then
+            echo "error: Branch name does not match the required pattern."
+            exit 1
+          fi

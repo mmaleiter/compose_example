@@ -107,8 +107,7 @@ fun PagerScreen(
                 Box {
                     Image(
                         painter = painter,
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentDescription = "entry.pokemonName",
                         contentScale = ContentScale.Crop,
                     )
