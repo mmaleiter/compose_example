@@ -239,6 +239,7 @@ data class IconComponent(val resId: Int) : UnityComposeComponent {
 }
 
 data class TextComponent(val title: Int) : UnityComposeComponent{
+    // Just some phony changes
     @Composable
     override fun CreateComposableFunction() {
         return Text(
